@@ -58,12 +58,14 @@ var (
 )
 
 type provisionConfig struct {
-	DataPathMap *config.DataPathMap // location to store data in OSD and OSD prepare containers
+	BackoffLimit int32               // maximum allowable number of failures for OSD prepare jobs
+	DataPathMap  *config.DataPathMap // location to store data in OSD and OSD prepare containers
 }
 
 func (c *Cluster) newProvisionConfig() *provisionConfig {
 	return &provisionConfig{
-		DataPathMap: config.NewDatalessDaemonDataPathMap(c.clusterInfo.Namespace, c.spec.DataDirHostPath),
+		BackoffLimit: 30,
+		DataPathMap:  config.NewDatalessDaemonDataPathMap(c.clusterInfo.Namespace, c.spec.DataDirHostPath),
 	}
 }
 

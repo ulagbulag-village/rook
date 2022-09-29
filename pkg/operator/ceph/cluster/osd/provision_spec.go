@@ -62,7 +62,8 @@ func (c *Cluster) makeJob(osdProps osdProperties, provisionConfig *provisionConf
 			},
 		},
 		Spec: batch.JobSpec{
-			Template: *podSpec,
+			BackoffLimit: &provisionConfig.BackoffLimit,
+			Template:     *podSpec,
 		},
 	}
 
